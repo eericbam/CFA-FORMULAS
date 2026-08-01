@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Formula Streak — CFA Level I Drill</title>
+<title>Formula Flashcards — CFA Level I</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800;900&family=JetBrains+Mono:wght@600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800;900&family=JetBrains+Mono:wght@500;600;700&display=swap');
 
 :root{
   --bg:#EAF7F3;
@@ -21,11 +21,10 @@
   --good:#2FBF71;
   --good-bg:#E3F9EC;
   --good-dark:#1F9C5A;
-  --bad:#FF5A6E;
-  --bad-bg:#FFE9EC;
-  --bad-dark:#E23F52;
+  --learn:#FFA83D;
+  --learn-bg:#FFF3E1;
+  --learn-dark:#DE8317;
   --line: rgba(15,46,42,0.10);
-  --radius: 20px;
 }
 
 *{box-sizing:border-box;}
@@ -57,12 +56,10 @@ body{
   flex-direction:column;
 }
 
-/* ---------- Top bar ---------- */
 .topbar{
   padding:16px 18px 14px;
   background:linear-gradient(135deg, var(--primary), var(--primary-dark));
   color:#fff;
-  position:relative;
 }
 .eyebrow{
   font-family:'Baloo 2', sans-serif;
@@ -73,242 +70,141 @@ body{
   align-items:center;
   margin-bottom:10px;
 }
-.stat-row{ display:flex; align-items:center; gap:12px; }
 .stat{
   display:flex; align-items:center; gap:4px;
   font-family:'Baloo 2', sans-serif;
-  font-size:14px; font-weight:700;
+  font-size:13px; font-weight:700;
   background:rgba(255,255,255,0.16);
-  padding:4px 9px 4px 7px;
+  padding:4px 9px;
   border-radius:100px;
 }
-.seal-row{display:flex; gap:4px;}
-.seal{ font-size:15px; line-height:1; transition:transform .25s ease, opacity .25s ease; }
-.seal.lost{ opacity:.25; filter:grayscale(1); transform:scale(0.85); }
+.progress-track{ height:10px; border-radius:8px; background:rgba(255,255,255,0.22); overflow:hidden; }
+.progress-fill{ height:100%; border-radius:8px; background:linear-gradient(90deg, var(--accent), #FFC48A); width:0%; transition:width .35s ease; }
 
-.progress-track{
-  height:10px;
-  border-radius:8px;
-  background:rgba(255,255,255,0.22);
-  overflow:hidden;
-}
-.progress-fill{
-  height:100%;
-  border-radius:8px;
-  background:linear-gradient(90deg, var(--accent), #FFC48A);
-  width:0%;
-  transition:width .4s cubic-bezier(.4,0,.2,1);
-  box-shadow:0 0 8px rgba(255,138,61,0.6);
-}
-
-/* ---------- Main ---------- */
-.stage{
-  flex:1;
-  display:flex;
-  flex-direction:column;
-  padding:22px 20px 20px;
-  position:relative;
-}
-
-/* ----- Mascot ----- */
-.mascot{ width:104px; height:104px; margin:0 auto; display:block; filter:drop-shadow(0 8px 14px rgba(15,46,42,0.18)); }
-.mascot.bounce{ animation: bounce .6s ease; }
-.mascot.wobble{ animation: wobble .5s ease; }
-@keyframes bounce{ 0%{transform:translateY(0) scale(1);} 30%{transform:translateY(-14px) scale(1.05);} 55%{transform:translateY(0) scale(0.97);} 75%{transform:translateY(-5px) scale(1.02);} 100%{transform:translateY(0) scale(1);} }
-@keyframes wobble{ 0%,100%{transform:rotate(0);} 20%{transform:rotate(-8deg);} 40%{transform:rotate(7deg);} 60%{transform:rotate(-5deg);} 80%{transform:rotate(3deg);} }
-
-.bubble{
-  background:var(--card-2);
-  border-radius:16px;
-  padding:9px 14px;
-  font-family:'Baloo 2', sans-serif;
-  font-weight:600;
-  font-size:14px;
-  color:var(--primary-dark);
-  text-align:center;
-  margin:10px auto 0;
-  max-width:280px;
-}
-
-/* ----- Start screen ----- */
-.start-screen{ text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center; flex:1; gap:4px;}
-h1.title{
-  font-family:'Baloo 2', sans-serif;
-  font-weight:800;
-  font-size:29px;
-  margin:14px 0 4px;
-  letter-spacing:-.01em;
-  color:var(--ink);
-}
-.subtitle{
-  color:var(--ink-soft);
-  font-size:15px;
-  font-weight:600;
-  line-height:1.5;
-  max-width:300px;
-  margin:0 0 22px;
-}
-.meta-pills{
-  display:flex; gap:10px; margin-bottom:26px; flex-wrap:wrap; justify-content:center;
-}
-.pill{
-  font-family:'Baloo 2', sans-serif;
-  font-weight:700;
-  font-size:13px;
-  background:var(--card-2);
-  border:2px solid var(--line);
-  padding:7px 13px;
-  border-radius:100px;
-  color:var(--primary-dark);
-}
-.pill b{ color:var(--accent-dark); }
-
-.btn{
-  border:none;
-  cursor:pointer;
-  font-family:'Baloo 2', sans-serif;
-  font-weight:700;
-  font-size:17px;
-  border-radius:16px;
-  padding:15px 20px;
-  width:100%;
-  transition:transform .1s ease, box-shadow .1s ease, filter .15s ease;
-}
-.btn:active{ transform:translateY(3px); }
-.btn-primary{
-  background:var(--accent);
-  color:#fff;
-  box-shadow:0 5px 0 0 var(--accent-dark);
-}
-.btn-primary:active{ box-shadow:0 2px 0 0 var(--accent-dark); }
-.btn-primary:hover{ filter:brightness(1.04); }
-.btn-ghost{
-  background:transparent;
-  color:var(--ink-soft);
-  border:2px solid var(--line);
-  margin-top:10px;
-  box-shadow:none;
-}
-
-/* ----- Question screen ----- */
-.q-wrap{ display:flex; flex-direction:column; flex:1; }
-.tag{
-  font-family:'JetBrains Mono', monospace;
-  font-size:11.5px;
-  font-weight:700;
-  color:var(--primary-dark);
-  background:var(--card-2);
-  display:inline-block;
-  padding:5px 11px;
-  border-radius:100px;
-  margin-bottom:14px;
-  width:fit-content;
-}
-.question{
-  font-family:'Baloo 2', sans-serif;
-  font-size:19.5px;
-  line-height:1.35;
-  font-weight:600;
-  margin:0 0 20px;
-  white-space:pre-line;
-  color:var(--ink);
-}
-.options{ display:flex; flex-direction:column; gap:10px; margin-bottom:6px;}
-.option{
-  text-align:left;
-  background:#fff;
-  border:2.5px solid var(--line);
-  border-radius:16px;
-  padding:13px 14px;
-  font-size:14px;
-  font-weight:700;
-  line-height:1.4;
-  color:var(--ink);
-  cursor:pointer;
-  display:flex;
-  gap:11px;
-  align-items:flex-start;
-  transition:border-color .15s, background .15s, transform .1s;
-  font-family:'Nunito', sans-serif;
-  box-shadow:0 3px 0 0 var(--line);
-}
-.option:hover{ border-color:var(--primary-light); }
-.option:active{ transform:translateY(2px); box-shadow:0 1px 0 0 var(--line); }
-.option .letter{
-  font-family:'Baloo 2', sans-serif;
-  font-weight:700;
-  font-size:12.5px;
-  width:24px;height:24px;
-  border-radius:50%;
-  background:var(--card-2);
-  color:var(--primary-dark);
-  display:flex; align-items:center; justify-content:center;
-  flex-shrink:0;
-  margin-top:1px;
-}
-.option.correct{ background:var(--good-bg); border-color:var(--good); box-shadow:0 3px 0 0 var(--good-dark); }
-.option.correct .letter{ background:var(--good); color:#fff; }
-.option.incorrect{ background:var(--bad-bg); border-color:var(--bad); box-shadow:0 3px 0 0 var(--bad-dark); }
-.option.incorrect .letter{ background:var(--bad); color:#fff; }
-.option.disabled{ pointer-events:none; opacity:.55; }
-.option.disabled.correct, .option.disabled.incorrect{ opacity:1; }
-
-.spacer{ flex:1; }
-
-/* Feedback panel */
-.feedback{
-  border-radius:18px;
-  padding:14px 16px 14px;
-  margin-top:14px;
-  display:none;
-  position:relative;
-  animation:slideUp .28s ease;
-}
-@keyframes slideUp{ from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);} }
-.feedback.show{ display:flex; gap:12px; align-items:flex-start; }
-.feedback.ok{ background:var(--good-bg); border:2.5px solid var(--good); }
-.feedback.no{ background:var(--bad-bg); border:2.5px solid var(--bad); }
-.fb-mascot{ width:46px; height:46px; flex-shrink:0; margin-top:2px; }
-.fb-body{ flex:1; }
-.fb-head{
-  font-family:'Baloo 2', sans-serif;
-  font-weight:800;
-  font-size:15px;
-  margin-bottom:4px;
-}
-.feedback.ok .fb-head{ color:var(--good-dark); }
-.feedback.no .fb-head{ color:var(--bad-dark); }
-.fb-text{ font-size:13.5px; font-weight:600; line-height:1.5; color:var(--ink-soft); }
-.fb-xp{ font-family:'Baloo 2', sans-serif; font-size:12px; color:var(--accent-dark); margin-top:8px; font-weight:700;}
-
-.bottom-bar{ margin-top:16px; }
-
-/* ----- Result screen ----- */
-.result-screen{ display:flex; flex-direction:column; align-items:center; text-align:center; flex:1; justify-content:center; }
-.result-title{ font-family:'Baloo 2', sans-serif; font-size:26px; font-weight:800; margin:10px 0 4px; color:var(--ink); }
-.result-sub{ color:var(--ink-soft); font-size:14.5px; font-weight:600; margin-bottom:22px; }
-.score-grid{ display:flex; gap:10px; margin-bottom:26px; width:100%; }
-.score-card{
-  flex:1; background:var(--card-2); border-radius:16px; padding:14px 8px;
-}
-.score-num{ font-family:'Baloo 2', sans-serif; font-size:24px; font-weight:800; color:var(--primary-dark);}
-.score-label{ font-family:'Baloo 2', sans-serif; font-size:10.5px; font-weight:700; text-transform:uppercase; color:var(--ink-soft); margin-top:2px;}
-
+.stage{ flex:1; display:flex; flex-direction:column; padding:22px 20px 20px; position:relative; }
 .hidden{ display:none !important; }
 
-/* Confetti */
-.confetti-piece{
-  position:fixed;
-  top:-10px;
-  width:8px;height:14px;
-  z-index:999;
-  border-radius:2px;
-  pointer-events:none;
-  animation: confettiFall linear forwards;
+/* ---------- Mascot ---------- */
+.mascot{ width:96px; height:96px; margin:0 auto; display:block; filter:drop-shadow(0 8px 14px rgba(15,46,42,0.18)); }
+.mascot.bounce{ animation: bounce .6s ease; }
+@keyframes bounce{ 0%{transform:translateY(0) scale(1);} 30%{transform:translateY(-12px) scale(1.05);} 60%{transform:translateY(0) scale(0.97);} 100%{transform:translateY(0) scale(1);} }
+.bubble{
+  background:var(--card-2); border-radius:16px; padding:9px 14px;
+  font-family:'Baloo 2', sans-serif; font-weight:600; font-size:14px;
+  color:var(--primary-dark); text-align:center; margin:10px auto 0; max-width:290px;
 }
-@keyframes confettiFall{
-  to{ transform: translateY(720px) rotate(540deg); opacity:0; }
+
+/* ---------- Home screen ---------- */
+.home-screen{ text-align:center; display:flex; flex-direction:column; align-items:center; flex:1; gap:4px; padding-top:4px; }
+h1.title{ font-family:'Baloo 2', sans-serif; font-weight:800; font-size:27px; margin:12px 0 4px; color:var(--ink); }
+.subtitle{ color:var(--ink-soft); font-size:14.5px; font-weight:600; line-height:1.5; max-width:300px; margin:0 0 18px; }
+
+.btn{
+  border:none; cursor:pointer; font-family:'Baloo 2', sans-serif; font-weight:700; font-size:16px;
+  border-radius:16px; padding:14px 20px; width:100%; transition:transform .1s ease, box-shadow .1s ease, filter .15s ease;
 }
+.btn:active{ transform:translateY(3px); }
+.btn-primary{ background:var(--accent); color:#fff; box-shadow:0 5px 0 0 var(--accent-dark); }
+.btn-primary:active{ box-shadow:0 2px 0 0 var(--accent-dark); }
+.btn-primary:disabled{ opacity:.4; pointer-events:none; }
+.btn-ghost{ background:transparent; color:var(--ink-soft); border:2px solid var(--line); box-shadow:none; margin-top:10px; }
+.btn-good{ background:var(--good); color:#fff; box-shadow:0 5px 0 0 var(--good-dark); }
+.btn-good:active{ box-shadow:0 2px 0 0 var(--good-dark); }
+.btn-learn{ background:var(--learn); color:#fff; box-shadow:0 5px 0 0 var(--learn-dark); }
+.btn-learn:active{ box-shadow:0 2px 0 0 var(--learn-dark); }
+
+/* ---------- Section select ---------- */
+.section-screen{ display:flex; flex-direction:column; flex:1; }
+.section-header{ text-align:center; margin-bottom:14px; }
+.section-header h2{ font-family:'Baloo 2', sans-serif; font-size:20px; font-weight:800; margin:0 0 2px; }
+.section-header p{ color:var(--ink-soft); font-size:13.5px; font-weight:600; margin:0; }
+
+.section-list{ display:flex; flex-direction:column; gap:9px; overflow-y:auto; flex:1; margin-bottom:12px; padding-right:2px; }
+.section-chip{
+  display:flex; align-items:center; gap:12px;
+  border:2.5px solid var(--line); border-radius:16px; padding:12px 14px;
+  cursor:pointer; transition:border-color .15s, background .15s;
+  background:#fff;
+}
+.section-chip.selected{ border-color:var(--primary); background:var(--card-2); }
+.section-emoji{ font-size:24px; width:32px; text-align:center; }
+.section-info{ flex:1; }
+.section-name{ font-family:'Baloo 2', sans-serif; font-weight:700; font-size:14.5px; color:var(--ink); }
+.section-count{ font-size:12px; color:var(--ink-soft); font-weight:700; margin-top:1px; }
+.section-check{
+  width:22px; height:22px; border-radius:7px; border:2.5px solid var(--line);
+  display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  font-size:13px; color:#fff; font-weight:800;
+}
+.section-chip.selected .section-check{ background:var(--primary); border-color:var(--primary); }
+
+.quick-actions{ display:flex; gap:8px; margin-bottom:12px; }
+.link-btn{
+  background:none; border:none; font-family:'Baloo 2', sans-serif; font-weight:700; font-size:12.5px;
+  color:var(--primary-dark); cursor:pointer; padding:4px 2px;
+}
+.shuffle-row{
+  display:flex; align-items:center; justify-content:space-between;
+  font-family:'Baloo 2', sans-serif; font-weight:700; font-size:13.5px; color:var(--ink);
+  background:var(--card-2); padding:10px 14px; border-radius:14px; margin-bottom:12px;
+}
+.switch{ position:relative; width:42px; height:24px; }
+.switch input{ opacity:0; width:0; height:0; }
+.switch-track{
+  position:absolute; inset:0; background:var(--line); border-radius:100px; cursor:pointer; transition:background .2s;
+}
+.switch-track:before{
+  content:""; position:absolute; width:18px; height:18px; left:3px; top:3px; background:#fff; border-radius:50%; transition:transform .2s;
+  box-shadow:0 1px 3px rgba(0,0,0,0.25);
+}
+.switch input:checked + .switch-track{ background:var(--primary); }
+.switch input:checked + .switch-track:before{ transform:translateX(18px); }
+
+/* ---------- Card screen ---------- */
+.card-screen{ display:flex; flex-direction:column; flex:1; }
+.card-scene{ flex:1; perspective:1400px; margin-bottom:16px; min-height:280px; }
+.card-inner{
+  position:relative; width:100%; height:100%; min-height:280px;
+  transition:transform .5s cubic-bezier(.4,.2,.2,1); transform-style:preserve-3d; cursor:pointer;
+}
+.card-inner.flipped{ transform:rotateY(180deg); }
+.card-face{
+  position:absolute; inset:0; backface-visibility:hidden;
+  border-radius:20px; padding:24px 22px; display:flex; flex-direction:column;
+  box-shadow:0 6px 0 0 var(--line), 0 10px 24px -10px rgba(15,46,42,0.2);
+  border:2.5px solid var(--line);
+}
+.card-front{ background:#fff; align-items:center; justify-content:center; text-align:center; }
+.card-back{ background:var(--card-2); transform:rotateY(180deg); }
+.card-tag{
+  font-family:'JetBrains Mono', monospace; font-size:11px; font-weight:700; color:var(--primary-dark);
+  background:#fff; display:inline-block; padding:4px 10px; border-radius:100px; margin-bottom:16px;
+  position:absolute; top:18px; left:18px;
+}
+.card-front .card-tag{ background:var(--card-2); }
+.card-front-text{
+  font-family:'Baloo 2', sans-serif; font-weight:700; font-size:22px; line-height:1.35; color:var(--ink);
+}
+.tap-hint{
+  font-family:'Baloo 2', sans-serif; font-size:12.5px; color:var(--ink-soft); margin-top:16px; font-weight:600;
+}
+.card-back-text{
+  font-family:'JetBrains Mono', monospace; font-size:14.5px; font-weight:600; line-height:1.65; color:var(--ink);
+  white-space:pre-line; margin-top:36px; flex:1; display:flex; align-items:center;
+}
+
+.rate-row{ display:flex; gap:10px; }
+.rate-row .btn{ flex:1; }
+.rate-hint{ text-align:center; font-family:'Baloo 2', sans-serif; font-size:12.5px; color:var(--ink-soft); font-weight:700; margin-bottom:10px; }
+
+/* ---------- Result screen ---------- */
+.result-screen{ display:flex; flex-direction:column; align-items:center; text-align:center; flex:1; justify-content:center; }
+.result-title{ font-family:'Baloo 2', sans-serif; font-size:24px; font-weight:800; margin:10px 0 4px; }
+.result-sub{ color:var(--ink-soft); font-size:14px; font-weight:600; margin-bottom:20px; }
+.score-grid{ display:flex; gap:10px; margin-bottom:22px; width:100%; }
+.score-card{ flex:1; background:var(--card-2); border-radius:16px; padding:14px 8px; }
+.score-num{ font-family:'Baloo 2', sans-serif; font-size:22px; font-weight:800; color:var(--primary-dark); }
+.score-label{ font-family:'Baloo 2', sans-serif; font-size:10px; font-weight:700; text-transform:uppercase; color:var(--ink-soft); margin-top:2px; }
 </style>
 </head>
 <body>
@@ -317,73 +213,188 @@ h1.title{
 
   <div class="topbar">
     <div class="eyebrow">
-      <span id="screenLabel">Formula Streak</span>
-      <div class="stat-row">
-        <div class="stat">🔥 <span id="streakVal">0</span></div>
-        <div class="stat">⚡ <span id="xpVal">0</span></div>
-      </div>
+      <span id="screenLabel">Formula Flashcards</span>
+      <div class="stat" id="masteredStat">✅ <span id="masteredVal">0</span> mastered</div>
     </div>
-    <div id="progressArea">
-      <div class="stat-row" style="justify-content:space-between; margin-bottom:6px;">
-        <div class="seal-row" id="heartsRow"></div>
-        <div class="stat" id="qCounter" style="background:rgba(255,255,255,0.16); color:#fff;"></div>
-      </div>
+    <div id="progressArea" class="hidden">
       <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
     </div>
   </div>
 
   <div class="stage">
 
-    <!-- START SCREEN -->
-    <div class="start-screen" id="startScreen">
-      <svg class="mascot" id="startMascot" viewBox="0 0 120 120"></svg>
-      <div class="bubble" id="startBubble">Beep boop. Let's crunch some formulas.</div>
-      <h1 class="title">Formula Streak</h1>
-      <p class="subtitle">Quick-fire drills on CFA Level I formulas — Quant, FSA, Corporate Issuers, Portfolio Management, Equity, Fixed Income, and Derivatives. Five hearts. Rapid recall.</p>
-      <div class="meta-pills">
-        <div class="pill"><b id="totalQCount">0</b> formulas</div>
-        <div class="pill">Best streak: <b id="bestStreakPill">0</b> 🔥</div>
-      </div>
-      <button class="btn btn-primary" onclick="startSession()">Crunch it</button>
+    <!-- HOME SCREEN -->
+    <div class="home-screen" id="homeScreen">
+      <svg class="mascot" id="homeMascot" viewBox="0 0 120 120"></svg>
+      <div class="bubble" id="homeBubble">Pick a topic, flip some cards, know it cold.</div>
+      <h1 class="title">Formula Flashcards</h1>
+      <p class="subtitle">Choose exactly which sections you want to review — flip each card, then mark it Got It or Still Learning.</p>
+      <div style="flex:1"></div>
+      <button class="btn btn-primary" onclick="showSectionSelect()">Choose sections to review</button>
     </div>
 
-    <!-- QUESTION SCREEN -->
-    <div class="q-wrap hidden" id="quizScreen">
-      <div class="tag" id="qTag">QUANT · RETURNS</div>
-      <div class="question" id="qText">Question text</div>
-      <div class="options" id="qOptions"></div>
-      <div class="feedback" id="feedback">
-        <svg class="fb-mascot" id="fbMascot" viewBox="0 0 120 120"></svg>
-        <div class="fb-body">
-          <div class="fb-head" id="fbHead">Correct!</div>
-          <div class="fb-text" id="fbText"></div>
-          <div class="fb-xp" id="fbXp"></div>
+    <!-- SECTION SELECT SCREEN -->
+    <div class="section-screen hidden" id="sectionScreen">
+      <div class="section-header">
+        <h2>What do you want to drill?</h2>
+        <p>Tap to select one or more sections</p>
+      </div>
+      <div class="quick-actions">
+        <button class="link-btn" onclick="selectAllSections()">Select all</button>
+        <button class="link-btn" onclick="clearAllSections()">Clear</button>
+      </div>
+      <div class="section-list" id="sectionList"></div>
+      <div class="shuffle-row">
+        <span>🔀 Shuffle cards</span>
+        <label class="switch">
+          <input type="checkbox" id="shuffleToggle" checked>
+          <span class="switch-track"></span>
+        </label>
+      </div>
+      <button class="btn btn-primary" id="startReviewBtn" onclick="startReview()" disabled>Start review</button>
+      <button class="btn btn-ghost" onclick="showHome()">Back</button>
+    </div>
+
+    <!-- CARD SCREEN -->
+    <div class="card-screen hidden" id="cardScreen">
+      <div class="card-scene">
+        <div class="card-inner" id="cardInner" onclick="flipCard()">
+          <div class="card-face card-front">
+            <div class="card-tag" id="cardTagFront">SECTION</div>
+            <div class="card-front-text" id="cardFrontText">Concept name</div>
+            <div class="tap-hint">👆 Tap to reveal the formula</div>
+          </div>
+          <div class="card-face card-back">
+            <div class="card-tag" id="cardTagBack">SECTION</div>
+            <div class="card-back-text" id="cardBackText">Formula</div>
+          </div>
         </div>
       </div>
-      <div class="spacer"></div>
-      <div class="bottom-bar">
-        <button class="btn btn-primary hidden" id="continueBtn" onclick="nextQuestion()">Continue</button>
+      <div class="rate-hint" id="rateHint">Flip the card first</div>
+      <div class="rate-row">
+        <button class="btn btn-learn" id="learnBtn" onclick="rateCard(false)" disabled>🤔 Still learning</button>
+        <button class="btn btn-good" id="gotItBtn" onclick="rateCard(true)" disabled>💪 Got it!</button>
       </div>
     </div>
 
     <!-- RESULT SCREEN -->
     <div class="result-screen hidden" id="resultScreen">
       <svg class="mascot" id="resultMascot" viewBox="0 0 120 120"></svg>
-      <h2 class="result-title" id="resultTitle">Session Complete</h2>
-      <p class="result-sub" id="resultSub">Nicely done.</p>
+      <h2 class="result-title" id="resultTitle">Deck Complete!</h2>
+      <p class="result-sub" id="resultSub">Nice work.</p>
       <div class="score-grid">
-        <div class="score-card"><div class="score-num" id="resAccuracy">0%</div><div class="score-label">Accuracy</div></div>
-        <div class="score-card"><div class="score-num" id="resXp">+0</div><div class="score-label">Points</div></div>
-        <div class="score-card"><div class="score-num" id="resStreak">0</div><div class="score-label">Day Streak</div></div>
+        <div class="score-card"><div class="score-num" id="resGotIt">0</div><div class="score-label">Got It</div></div>
+        <div class="score-card"><div class="score-num" id="resLearning">0</div><div class="score-label">Still Learning</div></div>
+        <div class="score-card"><div class="score-num" id="resTotal">0</div><div class="score-label">Reviewed</div></div>
       </div>
-      <button class="btn btn-primary" onclick="startSession()">Drill again</button>
-      <button class="btn btn-ghost" onclick="showStart()">Back to start</button>
+      <button class="btn btn-primary" id="reviewMissedBtn" onclick="reviewMissed()">Review the ones I missed</button>
+      <button class="btn btn-ghost" onclick="showSectionSelect()">Choose different sections</button>
     </div>
 
   </div>
 </div>
 
 <script>
+const SECTIONS = [
+  { key: "quant", label: "Quant Methods", emoji: "📊" },
+  { key: "econ", label: "Economics", emoji: "🌍" },
+  { key: "fsa", label: "Financial Statement Analysis", emoji: "📑" },
+  { key: "corp", label: "Corporate Issuers", emoji: "🏢" },
+  { key: "pm", label: "Portfolio Management", emoji: "📈" },
+  { key: "equity", label: "Equity Investments", emoji: "💹" },
+  { key: "fi", label: "Fixed Income", emoji: "💵" },
+  { key: "deriv", label: "Derivatives", emoji: "🔀" },
+  { key: "alt", label: "Alternative Investments", emoji: "🛢️" }
+];
+
+const CARDS = [
+  { id:1, section:"quant", front:"Holding Period Return (HPR)", back:"R = (P₁ − P₀ + D₁) / P₀\n\nEnding price minus beginning price, plus income received, over the beginning price." },
+  { id:2, section:"quant", front:"Annualized Return", back:"(1 + HPR)^(365/t) − 1\n\nRescales a sub-annual HPR up to a full-year equivalent, assuming the rate compounds all year." },
+  { id:3, section:"quant", front:"Continuously Compounded Return", back:"R_cc = ln(1 + HPR)\n\nConverts a discrete holding period return into its continuous-compounding equivalent." },
+  { id:4, section:"quant", front:"Geometric Mean Return", back:"R_G = [(1+R₁)×(1+R₂)×...×(1+Rₙ)]^(1/n) − 1\n\nUsed for compound growth rates over multiple periods — the actual compounding path." },
+  { id:5, section:"quant", front:"Harmonic Mean", back:"N / Σ(1/Xᵢ)\n\nUsed for averaging ratios, like cost per share in dollar-cost averaging problems." },
+  { id:6, section:"quant", front:"Sample Variance", back:"s² = Σ(xᵢ − x̄)² / (n − 1)\n\nDivide by (n − 1), not n — this gives an unbiased estimator of population variance." },
+  { id:7, section:"quant", front:"Coefficient of Variation (CV)", back:"CV = s / X̄\n\nStandard deviation relative to the mean — lets you compare dispersion across different scales." },
+  { id:8, section:"quant", front:"Bayes' Formula", back:"P(A|B) = [P(B|A) / P(B)] × P(A)\n\nUpdates a prior probability into a posterior probability once new evidence is observed." },
+  { id:9, section:"quant", front:"Correlation", back:"corr(Rᵢ,Rⱼ) = COV(Rᵢ,Rⱼ) / (σᵢ × σⱼ)\n\nCovariance divided by both standard deviations, rescaled into the [-1, 1] range." },
+  { id:10, section:"quant", front:"Roy's Safety-First Ratio", back:"(Rp − R_threshold) / σp\n\nUses a minimum acceptable return threshold in the numerator, not the risk-free rate." },
+  { id:11, section:"quant", front:"Expected Return of a 2-Asset Portfolio", back:"E(Rp) = wₐE(Rₐ) + w_bE(R_b)\n\nWeighted average of each asset's expected return, by portfolio weight." },
+  { id:12, section:"quant", front:"Variance of a 2-Stock Portfolio", back:"σ²p = wₐ²σₐ² + w_b²σ_b² + 2wₐw_bσₐσ_bρₐ_b\n\nAdds each asset's own variance plus a covariance term scaled by correlation." },
+  { id:13, section:"quant", front:"Z-Score", back:"z = (x − μ) / σ\n\nHow many standard deviations an observation sits from the population mean." },
+  { id:14, section:"quant", front:"Standard Error of the Sample Mean", back:"σ_x̄ = σ / √n\n\nShrinks as sample size grows — reflects how precise the estimate of the mean becomes." },
+  { id:15, section:"quant", front:"Coefficient of Determination (R²)", back:"R² = SSR / SST\n\nThe percentage of variation in Y explained by variation in X." },
+
+  { id:16, section:"econ", front:"Real Exchange Rate", back:"Nominal FX rate × (base currency CPI / price currency CPI)\n\nAdjusts the nominal rate for relative inflation between two countries." },
+  { id:17, section:"econ", front:"No-Arbitrage Forward Exchange Rate", back:"Forward = Spot × (1 + price currency rate) / (1 + base currency rate)\n\nCovered interest rate parity — must hold, or a riskless arbitrage exists." },
+  { id:18, section:"econ", front:"Fiscal Balance Identity", back:"(G − T) = (S − I) − (X − M)\n\nLinks the government's fiscal deficit to the saving/investment gap and the trade balance." },
+  { id:19, section:"econ", front:"Breakeven Point", back:"Total revenue = total cost\n\nOperate in the short run if revenue exceeds total variable cost, even if below total cost." },
+
+  { id:20, section:"fsa", front:"Basic EPS", back:"(Net income − preferred dividends) / weighted average common shares outstanding" },
+  { id:21, section:"fsa", front:"Free Cash Flow (FCF)", back:"Operating cash flow − net capital expenditures\n\nCash truly available for discretionary use after funding required CapEx." },
+  { id:22, section:"fsa", front:"Current Ratio", back:"Current assets / current liabilities" },
+  { id:23, section:"fsa", front:"Quick Ratio (Acid-Test)", back:"(Cash + marketable securities + receivables) / current liabilities\n\nExcludes inventory — the least liquid current asset." },
+  { id:24, section:"fsa", front:"Cash Ratio", back:"(Cash + marketable securities) / current liabilities" },
+  { id:25, section:"fsa", front:"Receivables Turnover", back:"Annual sales / average receivables" },
+  { id:26, section:"fsa", front:"Days Sales Outstanding (DSO)", back:"365 / receivables turnover\n\nAverage number of days to collect receivables." },
+  { id:27, section:"fsa", front:"Inventory Turnover", back:"Cost of goods sold / average inventory" },
+  { id:28, section:"fsa", front:"Days of Inventory on Hand", back:"365 / inventory turnover" },
+  { id:29, section:"fsa", front:"Payables Turnover Ratio", back:"Cost of goods sold / average trade payables" },
+  { id:30, section:"fsa", front:"Number of Days of Payables", back:"365 / payables turnover ratio" },
+  { id:31, section:"fsa", front:"Cash Conversion Cycle", back:"Days of inventory on hand + days of sales outstanding − number of days of payables\n\nNet days cash is tied up in operations." },
+  { id:32, section:"fsa", front:"Gross Profit Margin", back:"Gross profit / revenue" },
+  { id:33, section:"fsa", front:"Operating Profit Margin", back:"Operating profit / revenue" },
+  { id:34, section:"fsa", front:"Net Profit Margin", back:"Net income / revenue" },
+  { id:35, section:"fsa", front:"Return on Assets / Return on Total Capital (ROTC)", back:"EBIT / average total capital" },
+  { id:36, section:"fsa", front:"Debt-to-Equity Ratio", back:"Total debt / total equity" },
+  { id:37, section:"fsa", front:"Total-Debt Ratio", back:"Total debt / total assets" },
+  { id:38, section:"fsa", front:"Interest Coverage Ratio", back:"EBIT / interest payments" },
+  { id:39, section:"fsa", front:"Fixed Charge Coverage", back:"(EBIT + lease payments) / (interest + lease payments)" },
+  { id:40, section:"fsa", front:"Sustainable Growth Rate", back:"g = retention rate × ROE" },
+  { id:41, section:"fsa", front:"Retention Rate", back:"1 − (dividends declared / operating income after taxes)" },
+  { id:42, section:"fsa", front:"Traditional DuPont (ROE, 3-way)", back:"Net profit margin × asset turnover × equity multiplier\n\nProfitability × efficiency × leverage." },
+  { id:43, section:"fsa", front:"Extended DuPont (5-way)", back:"Tax burden × interest burden × EBIT margin × asset turnover × leverage\n\nFurther decomposes net profit margin from the 3-way version." },
+
+  { id:44, section:"corp", front:"Net Present Value (NPV)", back:"CF₀ + CF₁/(1+k)¹ + CF₂/(1+k)² + ... + CFₙ/(1+k)ⁿ\n\nSum of discounted future cash flows, net of the initial outlay." },
+  { id:45, section:"corp", front:"Internal Rate of Return (IRR)", back:"The discount rate that makes a project's NPV equal to zero." },
+  { id:46, section:"corp", front:"Return on Invested Capital (ROIC)", back:"Net operating profit after tax / average book value of invested capital" },
+  { id:47, section:"corp", front:"Weighted Average Cost of Capital (WACC)", back:"(wd)[kd(1−t)] + (wp)(kp) + (we)(ke)\n\nThe (1−t) on debt reflects the interest tax shield." },
+
+  { id:48, section:"pm", front:"Capital Asset Pricing Model (CAPM)", back:"E(Rᵢ) = RFR + βᵢ[E(Rmkt) − RFR]\n\nOnly systematic risk (β) is rewarded — unsystematic risk is diversified away." },
+  { id:49, section:"pm", front:"Sharpe Ratio", back:"(Rp − Rf) / σp\n\nExcess return per unit of total risk." },
+  { id:50, section:"pm", front:"Treynor Measure", back:"(Rp − Rf) / βp\n\nExcess return per unit of systematic risk — for a diversified investor." },
+  { id:51, section:"pm", front:"Leverage Factor (Margin Trading)", back:"1 / margin percentage\n\nLower margin % = more leverage." },
+  { id:52, section:"pm", front:"Margin Call Price", back:"P₀(1 − initial margin %) / (1 − maintenance margin %)" },
+
+  { id:53, section:"equity", front:"Price-Weighted Index", back:"Σ stock prices / adjusted divisor\n\nHigher-priced stocks swing the index more, regardless of company size." },
+  { id:54, section:"equity", front:"Value-Weighted Index", back:"[Σ(current price × shares)] / [Σ(base year price × shares)] × base value\n\nWeights by total market value, not per-share price." },
+  { id:55, section:"equity", front:"One-Period Valuation Model", back:"V₀ = D₁/(1+ke) + P₁/(1+ke)" },
+  { id:56, section:"equity", front:"Constant Growth (Gordon Growth) Model", back:"V₀ = D₁ / (ke − g)\n\nRequires constant g forever, and ke must exceed g." },
+  { id:57, section:"equity", front:"Earnings Multiplier Model", back:"P₀/E₁ = payout ratio / (ke − g)\n\nHigher payout & smaller (ke − g) spread → higher justified P/E." },
+  { id:58, section:"equity", front:"Leading P/E", back:"Price per share / forecast EPS next 12 months" },
+  { id:59, section:"equity", front:"Trailing P/E", back:"Price per share / EPS previous 12 months" },
+  { id:60, section:"equity", front:"Price-to-Book (P/B)", back:"Price per share / book value per share" },
+  { id:61, section:"equity", front:"Price-to-Sales (P/S)", back:"Price per share / sales per share" },
+
+  { id:62, section:"fi", front:"Full Bond Price", back:"PV(on last coupon date) × (1 + YTM/periods per yr)^(days since last coupon / days in coupon period)" },
+  { id:63, section:"fi", front:"Flat (Clean) Price", back:"Full price − accrued interest\n\nBonds are quoted at their flat price." },
+  { id:64, section:"fi", front:"Current Yield", back:"Annual coupon payment / current bond price" },
+  { id:65, section:"fi", front:"Macaulay Duration", back:"The weighted average time until a bond's cash flows are received." },
+  { id:66, section:"fi", front:"Modified Duration", back:"Macaulay duration / (1 + r)\n\nApproximates % price change for a 1% change in YTM." },
+  { id:67, section:"fi", front:"Approximate Convexity", back:"[V₋ + V₊ − 2V₀] / [(ΔYTM)² × V₀]" },
+  { id:68, section:"fi", front:"%ΔPrice Using Duration & Convexity", back:"−duration×Δy + ½×convexity×(Δy)²\n\nConvexity corrects duration's linear (tangent-line) approximation." },
+  { id:69, section:"fi", front:"Effective Duration", back:"(V₋ − V₊) / (2×V₀×Δcurve)\n\nRequired if a bond has embedded options." },
+  { id:70, section:"fi", front:"Expected Loss (Credit Risk)", back:"Probability of default × loss given default" },
+
+  { id:71, section:"deriv", front:"Put-Call Parity", back:"c + X(1+Rf)^−T = S + p\n\nA fiduciary call must equal a protective put under no-arbitrage." },
+  { id:72, section:"deriv", front:"Intrinsic Value of a Call", back:"Max[0, S − X]" },
+  { id:73, section:"deriv", front:"Intrinsic Value of a Put", back:"Max[0, X − S]" },
+  { id:74, section:"deriv", front:"Forward Contract Value at Time t", back:"Vₜ(T) = [Sₜ + PV(costs) − PV(benefits)] − F₀(T)(1+Rf)^−(T−t)" },
+  { id:75, section:"deriv", front:"American vs. European Options", back:"American: exercisable any time up to expiration.\nEuropean: exercisable only at expiration." },
+
+  { id:76, section:"alt", front:"Contango", back:"Futures price > spot price" },
+  { id:77, section:"alt", front:"Backwardation", back:"Futures price < spot price" }
+];
+
 /* ---------------- Mascot (Digit the Calculator) ---------------- */
 function mascotSVG(mood){
   const base = `
@@ -397,7 +408,7 @@ function mascotSVG(mood){
     <rect x="24" y="22" width="72" height="30" rx="7" fill="#0F2E2A"/>
   `;
   let face = '';
-  let buttons = `
+  const buttons = `
     <rect x="24" y="66" width="14" height="12" rx="3" fill="#FF8A3D"/>
     <rect x="42" y="66" width="14" height="12" rx="3" fill="#FFFFFF" opacity="0.9"/>
     <rect x="60" y="66" width="14" height="12" rx="3" fill="#FFFFFF" opacity="0.9"/>
@@ -413,13 +424,11 @@ function mascotSVG(mood){
       <circle cx="78" cy="37" r="4.5" fill="#5FF0CE"/>
       <path d="M40 44 Q60 56 80 44" stroke="#5FF0CE" stroke-width="4" fill="none" stroke-linecap="round"/>
     `;
-  } else if(mood === 'sad'){
+  } else if(mood === 'think'){
     face = `
-      <path d="M36 34 Q42 30 48 34" stroke="#FF8A8A" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-      <path d="M72 34 Q78 30 84 34" stroke="#FF8A8A" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-      <circle cx="42" cy="40" r="4" fill="#FF8A8A"/>
-      <circle cx="78" cy="40" r="4" fill="#FF8A8A"/>
-      <path d="M42 50 Q60 42 78 50" stroke="#FF8A8A" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <circle cx="42" cy="37" r="4.5" fill="#5FF0CE"/>
+      <path d="M70 34 Q78 30 86 34" stroke="#5FF0CE" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+      <path d="M46 47 Q60 44 74 47" stroke="#5FF0CE" stroke-width="4" fill="none" stroke-linecap="round"/>
     `;
   } else if(mood === 'wink'){
     face = `
@@ -436,642 +445,26 @@ function mascotSVG(mood){
   }
   return base + face + buttons;
 }
+function setMascot(el, mood){ if(el) el.innerHTML = mascotSVG(mood); }
+function bumpMascot(el){ if(!el) return; el.classList.remove('bounce'); void el.offsetWidth; el.classList.add('bounce'); }
 
-function setMascot(el, mood){
-  if(!el) return;
-  el.innerHTML = mascotSVG(mood);
-}
-
-function bumpMascot(el, kind){
-  if(!el) return;
-  el.classList.remove('bounce','wobble');
-  void el.offsetWidth;
-  el.classList.add(kind === 'good' ? 'bounce' : 'wobble');
-}
-
-const START_LINES = [
-  "Beep boop. Let's crunch some formulas.",
-  "Five hearts. Zero calculators allowed.",
-  "Warning: contains 100% more WACC than average.",
-  "I dream in numerators and denominators.",
-  "Let's see if you remember why it's (n-1)."
+const HOME_LINES = [
+  "Pick a topic, flip some cards, know it cold.",
+  "77 formulas. Zero calculators needed.",
+  "Flip. Recall. Repeat. That's the whole app.",
+  "Let's see which formulas actually stuck."
 ];
-const CORRECT_LINES = [
-  "Correct!", "Nailed the formula.", "Math checks out.", "That's the one.", "Certified numerator-denominator expert.", "Clean calculation."
-];
-const WRONG_LINES = [
-  "Not quite.", "Close, but the algebra disagrees.", "Divide-by-zero energy there.", "Nope — check your denominator.", "Not this time."
-];
-
-/* ---------------- Question bank ---------------- */
-const QUESTIONS = [
-  {
-    tag: "Quant · Returns",
-    q: "Which of these correctly calculates Holding Period Return (HPR)?",
-    options: [
-      "(P1 − P0 + D1) / P0",
-      "(P0 − P1 + D1) / P1",
-      "(P1 + D1) / P0 − P0"
-    ],
-    correct: 0,
-    explain: "HPR is the total return over the holding period: ending price minus beginning price, plus any income received, all divided by the beginning price."
-  },
-  {
-    tag: "Quant · Returns",
-    q: "In the annualized return formula (1 + HPR)^(365/t) − 1, what does the exponent's numerator (365) represent?",
-    options: [
-      "The total number of days in the holding period.",
-      "A fixed scaling constant that converts the sub-annual HPR to an annual basis.",
-      "The number of compounding periods per year."
-    ],
-    correct: 1,
-    explain: "365 divided by the number of days actually held (t) rescales a short-period HPR up to a full-year equivalent, assuming the same rate of return compounds all year."
-  },
-  {
-    tag: "Quant · Returns",
-    q: "Which formula correctly defines the continuously compounded return?",
-    options: [
-      "R_cc = ln(1 + HPR)",
-      "R_cc = e^(HPR) − 1",
-      "R_cc = HPR / (1 + HPR)"
-    ],
-    correct: 0,
-    explain: "The continuously compounded return is the natural log of one plus the holding period return — it converts a discrete return into its continuous-compounding equivalent."
-  },
-  {
-    tag: "Quant · Means",
-    q: "The geometric mean return is used instead of the arithmetic mean when you want to:",
-    options: [
-      "Measure compound growth rates over multiple periods.",
-      "Give more weight to more recent observations.",
-      "Ignore the effect of volatility entirely."
-    ],
-    correct: 0,
-    explain: "The geometric mean captures the actual compounding path of returns over time — it's the right tool for multi-period growth, unlike the arithmetic mean which overstates it."
-  },
-  {
-    tag: "Quant · Means",
-    q: "The harmonic mean is most commonly used for:",
-    options: [
-      "Averaging cost-per-share amounts, like in dollar-cost averaging.",
-      "Finding the midpoint of a normal distribution.",
-      "Calculating annualized returns from monthly data."
-    ],
-    correct: 0,
-    explain: "The harmonic mean (N divided by the sum of 1/X) shows up classically in cost-averaging problems, since it correctly weights by the quantity purchased at each price."
-  },
-  {
-    tag: "Quant · Dispersion",
-    q: "In the sample variance formula, s² = Σ(xᵢ − x̄)² / (n − 1), why is the denominator (n − 1) instead of n?",
-    options: [
-      "It's a rounding convention with no statistical purpose.",
-      "It corrects for the bias that comes from estimating variance using a sample rather than the full population.",
-      "It only applies when the sample size is even."
-    ],
-    correct: 1,
-    explain: "Dividing by (n − 1) instead of n gives an unbiased estimator of population variance — using n alone would systematically understate the true variance."
-  },
-  {
-    tag: "Quant · Dispersion",
-    q: "The coefficient of variation (CV) is calculated as:",
-    options: [
-      "Standard deviation divided by the mean.",
-      "Mean divided by standard deviation.",
-      "Variance divided by the mean."
-    ],
-    correct: 0,
-    explain: "CV = s / X̄. Dividing dispersion by the mean lets you compare relative risk across data sets with very different scales."
-  },
-  {
-    tag: "Quant · Probability",
-    q: "Bayes' formula, P(A|B) = [P(B|A) / P(B)] × P(A), is used to:",
-    options: [
-      "Update the probability of an event after receiving new information.",
-      "Calculate the correlation between two random variables.",
-      "Find the expected value of a discrete distribution."
-    ],
-    correct: 0,
-    explain: "Bayes' formula updates a prior probability P(A) into a posterior probability once new evidence B is observed — it's the core tool for probability updating."
-  },
-  {
-    tag: "Quant · Correlation",
-    q: "Correlation between two return series is calculated as:",
-    options: [
-      "Covariance divided by the product of the two standard deviations.",
-      "Covariance divided by the sum of the two variances.",
-      "Covariance multiplied by the product of the two standard deviations."
-    ],
-    correct: 0,
-    explain: "corr(Ri, Rj) = COV(Ri, Rj) / (σᵢ × σⱼ) — dividing by both standard deviations rescales covariance into the bounded [-1, 1] correlation range."
-  },
-  {
-    tag: "Quant · Portfolio Risk",
-    q: "Which of the following is Roy's safety-first ratio?",
-    options: [
-      "(Rp − R_threshold) / σp",
-      "(Rp − Rf) / σp",
-      "σp / (Rp − R_threshold)"
-    ],
-    correct: 0,
-    explain: "Roy's safety-first ratio uses a minimum acceptable return threshold (not the risk-free rate) in the numerator, unlike the Sharpe ratio — the goal is minimizing the probability of falling below that threshold."
-  },
-  {
-    tag: "Quant · Distributions",
-    q: "The z-score formula, z = (x − μ) / σ, tells you:",
-    options: [
-      "How many standard deviations an observation is from the population mean.",
-      "The probability that an observation exceeds a given value.",
-      "The variance of a standardized distribution."
-    ],
-    correct: 0,
-    explain: "Standardizing an observation converts it into units of standard deviation from the mean — that's what a z-score measures."
-  },
-  {
-    tag: "Quant · Sampling",
-    q: "The standard error of the sample mean is calculated as:",
-    options: [
-      "σ / √n",
-      "σ × √n",
-      "σ² / n"
-    ],
-    correct: 0,
-    explain: "Standard error shrinks as sample size grows — dividing the population standard deviation by the square root of n reflects how much more precise a larger sample's mean estimate becomes."
-  },
-  {
-    tag: "Quant · Regression",
-    q: "The coefficient of determination, R², is calculated as:",
-    options: [
-      "SSR / SST",
-      "SSE / SST",
-      "SST / SSR"
-    ],
-    correct: 0,
-    explain: "R² = sum of squares regression divided by total sum of squares — it's the percentage of variation in Y explained by variation in X."
-  },
-  {
-    tag: "Economics · FX",
-    q: "The real exchange rate is calculated as:",
-    options: [
-      "Nominal FX rate × (base currency CPI / price currency CPI)",
-      "Nominal FX rate + (base currency CPI − price currency CPI)",
-      "Nominal FX rate / (price currency CPI × base currency CPI)"
-    ],
-    correct: 0,
-    explain: "The real exchange rate adjusts the nominal rate for relative inflation between the two countries, using the ratio of the base currency's CPI to the price currency's CPI."
-  },
-  {
-    tag: "Economics · FX",
-    q: "In the no-arbitrage forward exchange rate formula, forward = spot × [(1 + price currency rate) / (1 + base currency rate)], what would happen if this relationship didn't hold?",
-    options: [
-      "Nothing — it's just a theoretical convention with no real-world consequence.",
-      "A riskless arbitrage opportunity would exist between the spot, forward, and money markets.",
-      "The spot rate itself would become undefined."
-    ],
-    correct: 1,
-    explain: "Covered interest rate parity has to hold, or traders could borrow in one currency, convert, invest in the other, and lock in a forward — a risk-free profit that competition would quickly eliminate."
-  },
-  {
-    tag: "Economics · Balances",
-    q: "The identity (G − T) = (S − I) − (X − M) links the fiscal budget deficit to:",
-    options: [
-      "The gap between domestic saving/investment and the trade balance.",
-      "The unemployment rate and inflation rate.",
-      "The central bank's target interest rate."
-    ],
-    correct: 0,
-    explain: "This identity shows the government's fiscal deficit is mirrored by some combination of an excess of investment over saving and/or a trade deficit — the accounts must balance."
-  },
-  {
-    tag: "FSA · EPS",
-    q: "The basic EPS formula is:",
-    options: [
-      "(Net income − preferred dividends) / weighted average common shares outstanding",
-      "Net income / weighted average common and preferred shares outstanding",
-      "(Net income + preferred dividends) / ending common shares outstanding"
-    ],
-    correct: 0,
-    explain: "Basic EPS subtracts preferred dividends from net income (since that income isn't available to common shareholders) before dividing by the weighted average common share count."
-  },
-  {
-    tag: "FSA · EPS",
-    q: "Compared to basic EPS, diluted EPS:",
-    options: [
-      "Ignores all convertible securities and options entirely.",
-      "Accounts for the effect that convertible securities, options, and other dilutive instruments would have if converted or exercised.",
-      "Uses ending shares outstanding instead of weighted average shares."
-    ],
-    correct: 1,
-    explain: "Diluted EPS adjusts both the numerator (adding back income effects like convertible interest, net of tax) and the denominator (adding potential shares from conversion) to show the most conservative, fully diluted EPS."
-  },
-  {
-    tag: "FSA · Cash Flow",
-    q: "Free cash flow (FCF) is calculated as:",
-    options: [
-      "Operating cash flow minus net capital expenditures.",
-      "Net income plus depreciation and amortization.",
-      "Operating cash flow plus financing cash flow."
-    ],
-    correct: 0,
-    explain: "FCF measures cash truly available for discretionary use after the company has funded the capital spending needed to maintain and grow the business."
-  },
-  {
-    tag: "FSA · Liquidity",
-    q: "The quick ratio (acid-test ratio) is calculated as:",
-    options: [
-      "(Cash + marketable securities + receivables) / current liabilities",
-      "Current assets / current liabilities",
-      "(Cash + inventory) / current liabilities"
-    ],
-    correct: 0,
-    explain: "The quick ratio deliberately excludes inventory from current assets, since inventory is the least liquid current asset — it's a stricter test of near-term liquidity than the current ratio."
-  },
-  {
-    tag: "FSA · Activity Ratios",
-    q: "Days sales outstanding (DSO) is calculated as:",
-    options: [
-      "365 / receivables turnover",
-      "365 / inventory turnover",
-      "Receivables turnover / 365"
-    ],
-    correct: 0,
-    explain: "DSO converts the receivables turnover ratio into an average number of days it takes to collect receivables — 365 divided by turnover gives you that day count."
-  },
-  {
-    tag: "FSA · Activity Ratios",
-    q: "The cash conversion cycle is calculated as:",
-    options: [
-      "Days of inventory on hand + days of sales outstanding − number of days of payables",
-      "Days of inventory on hand − days of sales outstanding + number of days of payables",
-      "Days of sales outstanding × number of days of payables"
-    ],
-    correct: 0,
-    explain: "The cycle adds how long inventory sits and how long it takes to collect from customers, then subtracts how long the company gets to pay its own suppliers — the net days cash is tied up."
-  },
-  {
-    tag: "FSA · Profitability",
-    q: "Gross profit margin is calculated as:",
-    options: [
-      "Gross profit / revenue",
-      "Gross profit / cost of goods sold",
-      "Revenue / gross profit"
-    ],
-    correct: 0,
-    explain: "Gross margin shows what percentage of each revenue dollar is left after covering the direct cost of producing the good or service sold."
-  },
-  {
-    tag: "FSA · Solvency",
-    q: "The debt-to-equity ratio is calculated as:",
-    options: [
-      "Total debt / total equity",
-      "Total debt / total assets",
-      "Total equity / total debt"
-    ],
-    correct: 0,
-    explain: "Debt-to-equity compares how much of the company is financed by debt relative to how much is financed by shareholders' equity."
-  },
-  {
-    tag: "FSA · Solvency",
-    q: "The interest coverage ratio is calculated as:",
-    options: [
-      "EBIT / interest payments",
-      "EBIT / total debt",
-      "Interest payments / EBIT"
-    ],
-    correct: 0,
-    explain: "Interest coverage measures how many times over a company's operating earnings could cover its interest obligations — a higher number signals more comfortable debt-servicing capacity."
-  },
-  {
-    tag: "FSA · Growth",
-    q: "A company's sustainable growth rate, g = RR × ROE, depends on:",
-    options: [
-      "The retention rate and return on equity.",
-      "The payout ratio and total asset turnover.",
-      "The debt-to-equity ratio and net profit margin."
-    ],
-    correct: 0,
-    explain: "Growth funded internally depends on how much profit a company keeps (retention rate) and how effectively it reinvests that retained profit (ROE)."
-  },
-  {
-    tag: "FSA · DuPont",
-    q: "The traditional 3-factor DuPont equation decomposes ROE into:",
-    options: [
-      "Net profit margin × asset turnover × equity multiplier (financial leverage).",
-      "Gross margin × interest coverage × current ratio.",
-      "Tax burden × interest burden × EBIT margin."
-    ],
-    correct: 0,
-    explain: "The traditional DuPont equation breaks ROE into profitability (net margin), efficiency (asset turnover), and leverage (equity multiplier) — three separate levers driving return on equity."
-  },
-  {
-    tag: "Corporate Issuers · Capital Budgeting",
-    q: "The NPV formula sums:",
-    options: [
-      "Each period's discounted cash flow, minus the initial outlay.",
-      "Each period's undiscounted cash flow, divided by the discount rate.",
-      "The internal rate of return across all periods."
-    ],
-    correct: 0,
-    explain: "NPV = CF₀ + CF₁/(1+k)¹ + CF₂/(1+k)² + ... — it's the sum of all discounted future cash flows, net of the initial investment (CF₀, typically negative)."
-  },
-  {
-    tag: "Corporate Issuers · Capital Budgeting",
-    q: "The internal rate of return (IRR) is defined as:",
-    options: [
-      "The discount rate that makes a project's NPV equal to zero.",
-      "The project's expected accounting rate of return.",
-      "The weighted average cost of the project's financing."
-    ],
-    correct: 0,
-    explain: "IRR is the breakeven discount rate — at that rate, the present value of inflows exactly equals the present value of outflows, so NPV is zero."
-  },
-  {
-    tag: "Corporate Issuers · ROIC",
-    q: "Return on invested capital (ROIC) is calculated as:",
-    options: [
-      "Net operating profit after tax / average book value of invested capital",
-      "Net income / total assets",
-      "EBIT / average total equity"
-    ],
-    correct: 0,
-    explain: "ROIC measures how efficiently a company turns its total invested capital (debt plus equity) into after-tax operating profit — independent of financing structure."
-  },
-  {
-    tag: "Corporate Issuers · WACC",
-    q: "In the WACC formula, WACC = (wd)[kd(1−t)] + (wp)(kp) + (we)(ke), why is the cost of debt multiplied by (1 − t)?",
-    options: [
-      "Interest expense is tax-deductible, so the after-tax cost of debt is lower than the stated rate.",
-      "Debt is always riskier than equity, so it needs an extra discount.",
-      "It converts the nominal rate into a real rate."
-    ],
-    correct: 0,
-    explain: "Because interest payments reduce taxable income, the true cost of debt to the firm is lower than the coupon rate — multiplying by (1 − t) captures that tax shield."
-  },
-  {
-    tag: "Portfolio Management · CAPM",
-    q: "The Capital Asset Pricing Model (CAPM) states expected return equals:",
-    options: [
-      "RFR + β × [E(Rmarket) − RFR]",
-      "RFR + σ × [E(Rmarket) − RFR]",
-      "E(Rmarket) − β × RFR"
-    ],
-    correct: 0,
-    explain: "CAPM says expected return is the risk-free rate plus a premium for systematic risk only, scaled by beta — unsystematic risk isn't rewarded since it can be diversified away."
-  },
-  {
-    tag: "Portfolio Management · Risk-Adjusted Return",
-    q: "Unlike the Sharpe ratio, the Treynor measure and Jensen's alpha use which type of risk in their calculation?",
-    options: [
-      "Systematic risk (beta) instead of total risk (standard deviation).",
-      "Total risk (standard deviation) instead of systematic risk.",
-      "Currency risk instead of market risk."
-    ],
-    correct: 0,
-    explain: "The Sharpe ratio divides by total risk (σ), appropriate for an undiversified investor. Treynor and Jensen's alpha instead use beta, appropriate for an investor holding a diversified portfolio."
-  },
-  {
-    tag: "Portfolio Management · Margin",
-    q: "In a margin transaction, the leverage factor is calculated as:",
-    options: [
-      "1 / margin percentage",
-      "Margin percentage / 1",
-      "Margin percentage × initial investment"
-    ],
-    correct: 0,
-    explain: "A lower margin percentage means more leverage — inverting the margin percentage shows exactly how many times an investor's return is amplified relative to an unlevered position."
-  },
-  {
-    tag: "Equity · Indices",
-    q: "In a price-weighted index, a stock's influence on the index is driven mainly by:",
-    options: [
-      "Its share price relative to other stocks in the index.",
-      "Its total market capitalization.",
-      "Its trading volume."
-    ],
-    correct: 0,
-    explain: "A price-weighted index sums up member stock prices and divides by an adjusted divisor — a $200 stock swings the index far more than a $20 stock, regardless of company size."
-  },
-  {
-    tag: "Equity · Indices",
-    q: "In a value-weighted (market-cap-weighted) index, a stock's weight is based on:",
-    options: [
-      "Current price × shares outstanding, relative to the base-period total.",
-      "The stock's price alone.",
-      "An equal weighting across all constituents."
-    ],
-    correct: 0,
-    explain: "Value-weighted indices scale each stock's influence by its total market value, so larger companies move the index more than smaller ones, regardless of per-share price."
-  },
-  {
-    tag: "Equity · Valuation",
-    q: "The constant growth (Gordon growth) dividend discount model, V0 = D1 / (ke − g), requires which assumption?",
-    options: [
-      "The dividend growth rate must be constant forever, and ke must exceed g.",
-      "The stock must pay no dividends currently.",
-      "The growth rate must exceed the required return."
-    ],
-    correct: 0,
-    explain: "The model breaks down mathematically (and economically) if g ≥ ke — a perpetually constant growth rate that's less than the discount rate is a required assumption."
-  },
-  {
-    tag: "Equity · Valuation",
-    q: "The earnings multiplier model, P0/E1 = payout ratio / (ke − g), shows that a stock's justified P/E is:",
-    options: [
-      "Higher when the payout ratio is higher and when the ke − g spread is smaller.",
-      "Independent of both the payout ratio and the discount rate.",
-      "Always equal to the industry average P/E."
-    ],
-    correct: 0,
-    explain: "A higher payout ratio (more cash returned per dollar of earnings) and a smaller gap between the required return and growth rate both push the justified P/E multiple higher."
-  },
-  {
-    tag: "Equity · Market Efficiency",
-    q: "Under the weak form of the Efficient Market Hypothesis, an investor:",
-    options: [
-      "Cannot earn excess returns using technical analysis based on past prices and volume.",
-      "Cannot earn excess returns even using material nonpublic information.",
-      "Can reliably earn excess returns using fundamental analysis."
-    ],
-    correct: 0,
-    explain: "Weak-form EMH says current prices already reflect all past price and volume data, so technical analysis alone shouldn't generate excess returns — fundamental analysis still could, under this form."
-  },
-  {
-    tag: "Fixed Income · Pricing",
-    q: "A bond trading at a discount to par value implies:",
-    options: [
-      "The coupon rate is less than the market yield.",
-      "The coupon rate is greater than the market yield.",
-      "The bond has no credit risk."
-    ],
-    correct: 0,
-    explain: "Bond prices and yields move inversely. If the coupon is below the going market yield, investors will only buy it at a discounted price to earn a competitive return."
-  },
-  {
-    tag: "Fixed Income · Yield Measures",
-    q: "Current yield is calculated as:",
-    options: [
-      "Annual coupon payment / current bond price",
-      "Annual coupon payment / face value",
-      "Face value / current bond price"
-    ],
-    correct: 0,
-    explain: "Current yield is a simple, backward-looking measure — annual coupon income divided by what you'd actually pay for the bond today, ignoring capital gains/losses and time value."
-  },
-  {
-    tag: "Fixed Income · Duration",
-    q: "Macaulay duration is best described as:",
-    options: [
-      "The weighted average time until a bond's cash flows are received.",
-      "The bond's percentage price change for a 1% change in yield.",
-      "The bond's yield to maturity."
-    ],
-    correct: 0,
-    explain: "Macaulay duration weights each cash flow's timing by its present value contribution — giving a single 'average maturity' figure in years."
-  },
-  {
-    tag: "Fixed Income · Duration",
-    q: "Modified duration approximates:",
-    options: [
-      "The percentage change in a bond's price for a 1% change in yield to maturity.",
-      "The exact dollar change in price for any yield change, including embedded option effects.",
-      "The bond's current yield relative to its yield to maturity."
-    ],
-    correct: 0,
-    explain: "Modified duration is derived from Macaulay duration and estimates price sensitivity to small yield changes — but it assumes a linear relationship, which is only an approximation."
-  },
-  {
-    tag: "Fixed Income · Duration",
-    q: "Why is convexity added as an adjustment to a duration-based price change estimate?",
-    options: [
-      "Because the actual price-yield relationship is curved, not a straight line, and duration alone only captures the linear part.",
-      "Because convexity replaces the need for a yield curve entirely.",
-      "Because convexity only matters for bonds with embedded options."
-    ],
-    correct: 0,
-    explain: "Duration is a linear (tangent-line) approximation of a curved price-yield relationship. Adding the convexity term corrects for that curvature, especially for larger yield changes."
-  },
-  {
-    tag: "Fixed Income · Credit",
-    q: "Expected loss on a bond is calculated as:",
-    options: [
-      "Probability of default × loss given default",
-      "Probability of default + loss given default",
-      "Loss given default / probability of default"
-    ],
-    correct: 0,
-    explain: "Expected loss multiplies how likely a default is by how much would actually be lost if it happened — both pieces matter, not just one."
-  },
-  {
-    tag: "Derivatives · Options",
-    q: "Put-call parity states that:",
-    options: [
-      "c + X(1 + Rf)^−T = S + p",
-      "c − X(1 + Rf)^−T = S − p",
-      "c × p = S × X(1 + Rf)^−T"
-    ],
-    correct: 0,
-    explain: "A protective put (S + p) and a fiduciary call (c + present value of the strike) must have the same value at expiration under no-arbitrage — that's the put-call parity relationship."
-  },
-  {
-    tag: "Derivatives · Options",
-    q: "The intrinsic value of a call option is calculated as:",
-    options: [
-      "Max[0, S − X]",
-      "Max[0, X − S]",
-      "S − X, even if negative"
-    ],
-    correct: 0,
-    explain: "A call's intrinsic value is the greater of zero or the amount the stock price exceeds the strike price — it can never be negative, since the holder simply wouldn't exercise an out-of-the-money option."
-  },
-  {
-    tag: "Derivatives · Options",
-    q: "Which of the following increases the value of both calls AND puts, all else equal?",
-    options: [
-      "An increase in volatility of the underlying.",
-      "An increase in the risk-free rate.",
-      "An increase in holding costs on the underlying."
-    ],
-    correct: 0,
-    explain: "Higher volatility raises the value of both calls and puts, since more uncertainty increases the chance of a larger favorable move for either type of option holder."
-  },
-  {
-    tag: "Derivatives · Options",
-    q: "The key difference between American and European options is:",
-    options: [
-      "American options can be exercised any time up to expiration; European options can only be exercised at expiration.",
-      "American options are only traded on U.S. exchanges.",
-      "European options always carry lower premiums than American options."
-    ],
-    correct: 0,
-    explain: "The 'American' and 'European' labels refer to exercise flexibility, not geography — American-style options give the holder the right to exercise early, at any point before expiry."
-  },
-  {
-    tag: "Alternative Investments · Futures",
-    q: "A futures market in contango means:",
-    options: [
-      "The futures price is greater than the spot price.",
-      "The futures price is less than the spot price.",
-      "The spot price and futures price are always equal."
-    ],
-    correct: 0,
-    explain: "Contango describes an upward-sloping futures curve — the futures price sits above the current spot price, often due to storage costs exceeding any convenience yield."
-  },
-  {
-    tag: "Quant · Applied",
-    q: "A stock starts the year at $50, ends at $55, and pays $2 in dividends. What is its holding period return, roughly?",
-    options: [
-      "14%",
-      "10%",
-      "4%"
-    ],
-    correct: 0,
-    explain: "HPR = (55 − 50 + 2) / 50 = 7/50 = 14%. Ending price minus beginning price, plus income, over beginning price."
-  },
-  {
-    tag: "FSA · Applied",
-    q: "A firm has current assets of $200, inventory of $80, and current liabilities of $100. What's closest to its quick ratio?",
-    options: [
-      "1.2",
-      "2.0",
-      "0.8"
-    ],
-    correct: 0,
-    explain: "Quick ratio excludes inventory: (200 − 80) / 100 = 120/100 = 1.2."
-  },
-  {
-    tag: "Equity · Applied",
-    q: "A stock is expected to pay a $2 dividend next year, has a required return of 10%, and a constant growth rate of 4%. Using the Gordon growth model, its value is closest to:",
-    options: [
-      "$33.33",
-      "$20.00",
-      "$50.00"
-    ],
-    correct: 0,
-    explain: "V0 = D1 / (ke − g) = 2 / (0.10 − 0.04) = 2 / 0.06 ≈ $33.33."
-  },
-  {
-    tag: "Corporate Issuers · Applied",
-    q: "A firm's cost of debt is 8%, its tax rate is 25%, its weight of debt is 40%, and its cost of equity is 12% with a 60% weight. What's closest to its WACC?",
-    options: [
-      "9.6%",
-      "10.4%",
-      "8.0%"
-    ],
-    correct: 0,
-    explain: "After-tax cost of debt = 8% × (1 − 0.25) = 6%. WACC = (0.40 × 6%) + (0.60 × 12%) = 2.4% + 7.2% = 9.6%."
-  }
-];
-
 
 /* ---------------- State ---------------- */
-let order = [];
-let idx = 0;
-let hearts = 5;
-let sessionXp = 0;
-let sessionCorrect = 0;
-let answered = false;
-let stats = { xp:0, streak:0, bestStreak:0, lastPracticeDate:null };
-
 const $ = (id) => document.getElementById(id);
+let selectedSections = new Set(SECTIONS.map(s => s.key));
+let deck = [];
+let dIdx = 0;
+let flipped = false;
+let gotItCount = 0;
+let learningCount = 0;
+let missedThisRound = [];
+let mastered = new Set();
 
 function shuffle(arr){
   const a = arr.slice();
@@ -1082,205 +475,191 @@ function shuffle(arr){
   return a;
 }
 function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
-
-/* ---------------- Confetti ---------------- */
-function burstConfetti(){
-  const colors = ['#FF8A3D','#0E9E86','#2FBF71','#FF5A6E','#5FC9B6'];
-  const appEl = $('appRoot');
-  const rect = appEl.getBoundingClientRect();
-  for(let i=0;i<18;i++){
-    const p = document.createElement('div');
-    p.className = 'confetti-piece';
-    p.style.left = (rect.left + Math.random()*rect.width) + 'px';
-    p.style.background = colors[Math.floor(Math.random()*colors.length)];
-    p.style.animationDuration = (0.9 + Math.random()*0.6) + 's';
-    p.style.top = rect.top + 'px';
-    document.body.appendChild(p);
-    setTimeout(() => p.remove(), 1700);
-  }
-}
+function sectionLabel(key){ const s = SECTIONS.find(x=>x.key===key); return s ? s.label : key; }
+function sectionEmoji(key){ const s = SECTIONS.find(x=>x.key===key); return s ? s.emoji : "📎"; }
 
 /* ---------------- Persistence ---------------- */
-async function loadStats(){
+async function loadMastered(){
   try{
-    const res = await window.storage.get('formula-drill:stats');
+    const res = await window.storage.get('formula-flashcards:mastered');
     if(res && res.value){
-      stats = JSON.parse(res.value);
+      mastered = new Set(JSON.parse(res.value));
     }
-  }catch(e){ /* no saved stats yet, or storage unavailable — start fresh */ }
-  renderHeader();
+  }catch(e){ /* fine — starts empty if unavailable */ }
+  renderMasteredStat();
 }
-
-async function saveStats(){
+async function saveMastered(){
   try{
-    await window.storage.set('formula-drill:stats', JSON.stringify(stats));
-  }catch(e){ /* storage unavailable — session progress still works, just won't persist */ }
+    await window.storage.set('formula-flashcards:mastered', JSON.stringify(Array.from(mastered)));
+  }catch(e){ /* progress just won't persist */ }
 }
-
-function todayStr(){
-  return new Date().toISOString().slice(0,10);
-}
-
-function bumpStreakForToday(){
-  const today = todayStr();
-  if(stats.lastPracticeDate === today){
-    // already practiced today, streak unchanged
-  } else {
-    const y = new Date();
-    y.setDate(y.getDate()-1);
-    const yesterday = y.toISOString().slice(0,10);
-    stats.streak = (stats.lastPracticeDate === yesterday) ? stats.streak + 1 : 1;
-    stats.lastPracticeDate = today;
-  }
-  stats.bestStreak = Math.max(stats.bestStreak || 0, stats.streak);
-}
-
-/* ---------------- Render helpers ---------------- */
-function renderHeader(){
-  $('streakVal').textContent = stats.streak || 0;
-  $('xpVal').textContent = stats.xp || 0;
-  $('bestStreakPill').textContent = stats.bestStreak || 0;
-  $('totalQCount').textContent = QUESTIONS.length;
-}
-
-function renderHearts(){
-  const row = $('heartsRow');
-  row.innerHTML = '';
-  for(let i=0;i<5;i++){
-    const span = document.createElement('span');
-    span.className = 'seal' + (i >= hearts ? ' lost' : '');
-    span.textContent = '❤️';
-    row.appendChild(span);
-  }
+function renderMasteredStat(){
+  $('masteredVal').textContent = mastered.size;
 }
 
 /* ---------------- Screens ---------------- */
-function showStart(){
-  $('startScreen').classList.remove('hidden');
-  $('quizScreen').classList.add('hidden');
-  $('resultScreen').classList.add('hidden');
-  $('screenLabel').textContent = 'Formula Streak';
-  $('progressArea').style.visibility = 'hidden';
-  setMascot($('startMascot'), 'happy');
-  $('startBubble').textContent = pick(START_LINES);
-  renderHeader();
+function showHome(){
+  hideAll();
+  $('homeScreen').classList.remove('hidden');
+  $('screenLabel').textContent = 'Formula Flashcards';
+  $('progressArea').classList.add('hidden');
+  setMascot($('homeMascot'), 'happy');
+  $('homeBubble').textContent = pick(HOME_LINES);
+  renderMasteredStat();
 }
 
-function startSession(){
-  order = shuffle(QUESTIONS);
-  idx = 0;
-  hearts = 5;
-  sessionXp = 0;
-  sessionCorrect = 0;
-  $('startScreen').classList.add('hidden');
-  $('resultScreen').classList.add('hidden');
-  $('quizScreen').classList.remove('hidden');
-  $('progressArea').style.visibility = 'visible';
-  $('screenLabel').textContent = 'Drilling';
-  renderQuestion();
+function showSectionSelect(){
+  hideAll();
+  $('sectionScreen').classList.remove('hidden');
+  $('screenLabel').textContent = 'Choose sections';
+  $('progressArea').classList.add('hidden');
+  renderSectionList();
 }
 
-function renderQuestion(){
-  answered = false;
-  const item = order[idx];
-  $('qTag').textContent = item.tag.toUpperCase();
-  $('qText').textContent = item.q;
-  $('qCounter').textContent = (idx+1) + ' / ' + order.length;
-  $('progressFill').style.width = Math.round((idx / order.length) * 100) + '%';
-  renderHearts();
+function hideAll(){
+  ['homeScreen','sectionScreen','cardScreen','resultScreen'].forEach(id => $(id).classList.add('hidden'));
+}
 
-  const optWrap = $('qOptions');
-  optWrap.innerHTML = '';
-  const letters = ['A','B','C'];
-  item.options.forEach((opt, i) => {
-    const b = document.createElement('button');
-    b.className = 'option';
-    b.innerHTML = '<span class="letter">'+letters[i]+'</span><span>'+opt+'</span>';
-    b.onclick = () => selectAnswer(i, b);
-    optWrap.appendChild(b);
+function renderSectionList(){
+  const wrap = $('sectionList');
+  wrap.innerHTML = '';
+  SECTIONS.forEach(sec => {
+    const cardsInSection = CARDS.filter(c => c.section === sec.key);
+    const masteredInSection = cardsInSection.filter(c => mastered.has(c.id)).length;
+    const chip = document.createElement('div');
+    chip.className = 'section-chip' + (selectedSections.has(sec.key) ? ' selected' : '');
+    chip.innerHTML = `
+      <div class="section-emoji">${sec.emoji}</div>
+      <div class="section-info">
+        <div class="section-name">${sec.label}</div>
+        <div class="section-count">${cardsInSection.length} cards · ${masteredInSection} mastered</div>
+      </div>
+      <div class="section-check">${selectedSections.has(sec.key) ? '✓' : ''}</div>
+    `;
+    chip.onclick = () => toggleSection(sec.key);
+    wrap.appendChild(chip);
   });
-
-  $('feedback').classList.remove('show','ok','no');
-  $('continueBtn').classList.add('hidden');
+  updateStartButton();
 }
 
-function selectAnswer(i, btnEl){
-  if(answered) return;
-  answered = true;
-  const item = order[idx];
-  const correct = i === item.correct;
-  const allOpts = document.querySelectorAll('#qOptions .option');
-  allOpts.forEach((el, j) => {
-    el.classList.add('disabled');
-    if(j === item.correct) el.classList.add('correct');
-    if(j === i && !correct) el.classList.add('incorrect');
-  });
+function toggleSection(key){
+  if(selectedSections.has(key)) selectedSections.delete(key);
+  else selectedSections.add(key);
+  renderSectionList();
+}
+function selectAllSections(){
+  selectedSections = new Set(SECTIONS.map(s => s.key));
+  renderSectionList();
+}
+function clearAllSections(){
+  selectedSections = new Set();
+  renderSectionList();
+}
+function updateStartButton(){
+  $('startReviewBtn').disabled = selectedSections.size === 0;
+}
 
-  const fb = $('feedback');
-  fb.classList.add('show', correct ? 'ok' : 'no');
-  $('fbHead').textContent = correct ? pick(CORRECT_LINES) : pick(WRONG_LINES);
-  $('fbText').textContent = item.explain;
-  setMascot($('fbMascot'), correct ? 'happy' : 'sad');
-  bumpMascot($('fbMascot'), correct ? 'good' : 'bad');
+function startReview(){
+  let pool = CARDS.filter(c => selectedSections.has(c.section));
+  if($('shuffleToggle').checked) pool = shuffle(pool);
+  deck = pool;
+  dIdx = 0;
+  gotItCount = 0;
+  learningCount = 0;
+  missedThisRound = [];
+  hideAll();
+  $('cardScreen').classList.remove('hidden');
+  $('screenLabel').textContent = 'Reviewing';
+  $('progressArea').classList.remove('hidden');
+  renderCard();
+}
 
-  if(correct){
-    sessionCorrect++;
-    const gained = 10;
-    sessionXp += gained;
-    stats.xp = (stats.xp || 0) + gained;
-    $('fbXp').textContent = '+' + gained + ' pts ⚡';
-    burstConfetti();
+function renderCard(){
+  flipped = false;
+  const item = deck[dIdx];
+  $('cardInner').classList.remove('flipped');
+  $('cardTagFront').textContent = sectionEmoji(item.section) + ' ' + sectionLabel(item.section).toUpperCase();
+  $('cardTagBack').textContent = sectionEmoji(item.section) + ' ' + sectionLabel(item.section).toUpperCase();
+  $('cardFrontText').textContent = item.front;
+  $('cardBackText').textContent = item.back;
+  $('progressFill').style.width = Math.round((dIdx/deck.length)*100) + '%';
+  $('learnBtn').disabled = true;
+  $('gotItBtn').disabled = true;
+  $('rateHint').textContent = 'Flip the card first';
+}
+
+function flipCard(){
+  flipped = !flipped;
+  $('cardInner').classList.toggle('flipped', flipped);
+  if(flipped){
+    $('learnBtn').disabled = false;
+    $('gotItBtn').disabled = false;
+    $('rateHint').textContent = 'How well did you know it?';
   } else {
-    hearts = Math.max(0, hearts - 1);
-    renderHearts();
-    $('fbXp').textContent = 'Correct answer highlighted above';
+    $('rateHint').textContent = 'Flip the card first';
   }
-
-  $('continueBtn').classList.remove('hidden');
-  $('continueBtn').textContent = (hearts === 0) ? 'See results' : (idx === order.length-1 ? 'Finish' : 'Continue');
 }
 
-function nextQuestion(){
-  if(hearts === 0 || idx === order.length-1){
-    finishSession();
-    return;
+function rateCard(gotIt){
+  const item = deck[dIdx];
+  if(gotIt){
+    gotItCount++;
+    mastered.add(item.id);
+    bumpMascot($('homeMascot'));
+  } else {
+    learningCount++;
+    missedThisRound.push(item);
+    mastered.delete(item.id);
   }
-  idx++;
-  renderQuestion();
+  saveMastered();
+  renderMasteredStat();
+
+  if(dIdx === deck.length - 1){
+    finishDeck();
+  } else {
+    dIdx++;
+    renderCard();
+  }
 }
 
-async function finishSession(){
-  $('progressFill').style.width = '100%';
-  bumpStreakForToday();
-  await saveStats();
-
-  const total = idx + 1;
-  const accuracy = Math.round((sessionCorrect / total) * 100);
-  const outOfHearts = hearts === 0;
-
-  $('quizScreen').classList.add('hidden');
+function finishDeck(){
+  hideAll();
   $('resultScreen').classList.remove('hidden');
   $('screenLabel').textContent = 'Results';
-  $('progressArea').style.visibility = 'hidden';
+  $('progressArea').classList.add('hidden');
 
-  const resultMood = outOfHearts ? 'sad' : (accuracy === 100 ? 'wink' : 'happy');
-  setMascot($('resultMascot'), resultMood);
-  if(accuracy === 100 && !outOfHearts) burstConfetti();
+  const total = deck.length;
+  const allGood = learningCount === 0;
+  setMascot($('resultMascot'), allGood ? 'wink' : 'happy');
 
-  $('resultTitle').textContent = outOfHearts ? 'Out of Hearts!' : 'Session Complete';
-  $('resultSub').textContent = outOfHearts
-    ? "Happens to the best of us — review the ones you missed and go again."
-    : (accuracy === 100 ? "Perfect run. WACC has nothing on you." : 'Solid rep. Consistency beats cramming.');
+  $('resultTitle').textContent = 'Deck Complete!';
+  $('resultSub').textContent = allGood
+    ? "Every single card, mastered. Nothing left to learn here."
+    : `${learningCount} card${learningCount===1?'':'s'} still need${learningCount===1?'s':''} a bit more work — totally normal.`;
 
-  $('resAccuracy').textContent = accuracy + '%';
-  $('resXp').textContent = '+' + sessionXp;
-  $('resStreak').textContent = stats.streak || 0;
+  $('resGotIt').textContent = gotItCount;
+  $('resLearning').textContent = learningCount;
+  $('resTotal').textContent = total;
 
-  renderHeader();
+  $('reviewMissedBtn').classList.toggle('hidden', missedThisRound.length === 0);
+}
+
+function reviewMissed(){
+  if(missedThisRound.length === 0) return;
+  deck = $('shuffleToggle').checked ? shuffle(missedThisRound) : missedThisRound.slice();
+  dIdx = 0;
+  gotItCount = 0;
+  learningCount = 0;
+  missedThisRound = [];
+  hideAll();
+  $('cardScreen').classList.remove('hidden');
+  $('screenLabel').textContent = 'Reviewing missed';
+  $('progressArea').classList.remove('hidden');
+  renderCard();
 }
 
 /* ---------------- Init ---------------- */
-loadStats().then(showStart);
+loadMastered().then(showHome);
 </script>
 </body>
 </html>
